@@ -15,6 +15,14 @@
 
 set -e
 
+# Foolproof
+declare +x sure
+read -p "You are going to replace your system with Arch Linux. Everything will be deleted. Sure? [Y/n]" -r sure
+[[ $sure == Y ]] || exit 1
+
+read -p "Are you absolutely sure? [y/n]" -r sure
+[[ $sure == y ]] || exit 1
+
 # Gathering informations about actual environment.
 if command -v wget >/dev/null 2>&1; then
 	_download() { wget -O- "$@" ; }
