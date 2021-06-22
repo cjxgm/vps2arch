@@ -18,9 +18,11 @@ set -e
 # Foolproof
 declare +x sure
 read -p "You are going to replace your system with Arch Linux. Everything will be deleted. Sure? [Y/n] " -r -N1 sure
+echo
 [[ $sure == Y ]] || exit 1
 
 read -p "Are you absolutely sure? [y/n] " -r -N1 sure
+echo
 [[ $sure == y ]] || exit 1
 
 # Gathering informations about actual environment.
