@@ -19,11 +19,17 @@ set -e
 declare +x sure
 read -p "You are going to replace your system with Arch Linux. Everything will be deleted. Sure? [Y/n] " -r -N1 sure
 echo
-[[ $sure == Y ]] || exit 1
+[[ $sure == Y ]] || {
+	echo "Cancelled."
+	exit 1
+}
 
 read -p "Are you absolutely sure? [y/n] " -r -N1 sure
 echo
-[[ $sure == y ]] || exit 1
+[[ $sure == y ]] || {
+	echo "Cancelled."
+	exit 1
+}
 
 # Gathering informations about actual environment.
 if command -v wget >/dev/null 2>&1; then
@@ -189,6 +195,11 @@ configure_network() {
 finalize() {
 	# Enable SSH login for user root (#3)
 	sed -i '/^#PermitRootLogin\s/s/.*/&\nPermitRootLogin yes/' /etc/ssh/sshd_config
+
+	local m
+	for m in $mirrors; do
+		echo 'Server = '"$m"'/$repo/os/$arch'
+	done > "/etc/pacman.d/mirrorlist"
 
 	cat <<-EOF
 		Hi,
