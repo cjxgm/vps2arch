@@ -201,6 +201,8 @@ finalize() {
 		echo 'Server = '"$m"'/$repo/os/$arch'
 	done > "/etc/pacman.d/mirrorlist"
 
+	echo "deny = 0" >> "/etc/security/faillock.conf"
+
 	cat <<-EOF
 		Hi,
 		your VM has successfully been reimaged with Arch Linux.
